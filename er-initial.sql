@@ -49,7 +49,7 @@ CREATE TABLE `entity` (
 );
 
 CREATE TABLE `identity` (
-  `id` interger PRIMARY KEY AUTO_INCREMENT,
+  `id` integer PRIMARY KEY AUTO_INCREMENT,
   `primary_entity_id` integer,
   `first_name` varchar(35),
   `middle_name` varchar(35),
