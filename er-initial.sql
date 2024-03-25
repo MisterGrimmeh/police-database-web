@@ -110,82 +110,19 @@ CREATE INDEX `report_number` ON `arrest_report` (`id`, `event_id`);
 
 ALTER TABLE `complaint_report` ADD FOREIGN KEY (`event_id`) REFERENCES `event` (`id`);
 
-CREATE TABLE `crime_complaint_report` (
-  `crime_id` integer,
-  `complaint_report_crime_id` integer,
-  PRIMARY KEY (`crime_id`, `complaint_report_crime_id`)
-);
+ALTER TABLE `complaint_report` ADD FOREIGN KEY (`crime_id`) REFERENCES `crime` (`id`);
 
-ALTER TABLE `crime_complaint_report` ADD FOREIGN KEY (`crime_id`) REFERENCES `crime` (`id`);
+ALTER TABLE `complaint_report` ADD FOREIGN KEY (`perpetrator_entity_id`) REFERENCES `entity` (`id`);
 
-ALTER TABLE `crime_complaint_report` ADD FOREIGN KEY (`complaint_report_crime_id`) REFERENCES `complaint_report` (`crime_id`);
+ALTER TABLE `complaint_report` ADD FOREIGN KEY (`perpetrator_identity_id`) REFERENCES `identity` (`id`);
 
+ALTER TABLE `complaint_report` ADD FOREIGN KEY (`victim_entity_id`) REFERENCES `entity` (`id`);
 
-CREATE TABLE `entity_complaint_report` (
-  `entity_id` integer,
-  `complaint_report_perpetrator_entity_id` integer,
-  PRIMARY KEY (`entity_id`, `complaint_report_perpetrator_entity_id`)
-);
+ALTER TABLE `complaint_report` ADD FOREIGN KEY (`victim_identity_id`) REFERENCES `identity` (`id`);
 
-ALTER TABLE `entity_complaint_report` ADD FOREIGN KEY (`entity_id`) REFERENCES `entity` (`id`);
+ALTER TABLE `complaint_report` ADD FOREIGN KEY (`reporter_entity_id`) REFERENCES `entity` (`id`);
 
-ALTER TABLE `entity_complaint_report` ADD FOREIGN KEY (`complaint_report_perpetrator_entity_id`) REFERENCES `complaint_report` (`perpetrator_entity_id`);
-
-
-CREATE TABLE `identity_complaint_report` (
-  `identity_id` integer,
-  `complaint_report_perpetrator_identity_id` integer,
-  PRIMARY KEY (`identity_id`, `complaint_report_perpetrator_identity_id`)
-);
-
-ALTER TABLE `identity_complaint_report` ADD FOREIGN KEY (`identity_id`) REFERENCES `identity` (`id`);
-
-ALTER TABLE `identity_complaint_report` ADD FOREIGN KEY (`complaint_report_perpetrator_identity_id`) REFERENCES `complaint_report` (`perpetrator_identity_id`);
-
-
-CREATE TABLE `entity_complaint_report(1)` (
-  `entity_id` integer,
-  `complaint_report_victim_entity_id` integer,
-  PRIMARY KEY (`entity_id`, `complaint_report_victim_entity_id`)
-);
-
-ALTER TABLE `entity_complaint_report(1)` ADD FOREIGN KEY (`entity_id`) REFERENCES `entity` (`id`);
-
-ALTER TABLE `entity_complaint_report(1)` ADD FOREIGN KEY (`complaint_report_victim_entity_id`) REFERENCES `complaint_report` (`victim_entity_id`);
-
-
-CREATE TABLE `identity_complaint_report(1)` (
-  `identity_id` integer,
-  `complaint_report_victim_identity_id` integer,
-  PRIMARY KEY (`identity_id`, `complaint_report_victim_identity_id`)
-);
-
-ALTER TABLE `identity_complaint_report(1)` ADD FOREIGN KEY (`identity_id`) REFERENCES `identity` (`id`);
-
-ALTER TABLE `identity_complaint_report(1)` ADD FOREIGN KEY (`complaint_report_victim_identity_id`) REFERENCES `complaint_report` (`victim_identity_id`);
-
-
-CREATE TABLE `entity_complaint_report(2)` (
-  `entity_id` integer,
-  `complaint_report_reporter_entity_id` integer,
-  PRIMARY KEY (`entity_id`, `complaint_report_reporter_entity_id`)
-);
-
-ALTER TABLE `entity_complaint_report(2)` ADD FOREIGN KEY (`entity_id`) REFERENCES `entity` (`id`);
-
-ALTER TABLE `entity_complaint_report(2)` ADD FOREIGN KEY (`complaint_report_reporter_entity_id`) REFERENCES `complaint_report` (`reporter_entity_id`);
-
-
-CREATE TABLE `identity_complaint_report(2)` (
-  `identity_id` integer,
-  `complaint_report_reporter_identity_id` integer,
-  PRIMARY KEY (`identity_id`, `complaint_report_reporter_identity_id`)
-);
-
-ALTER TABLE `identity_complaint_report(2)` ADD FOREIGN KEY (`identity_id`) REFERENCES `identity` (`id`);
-
-ALTER TABLE `identity_complaint_report(2)` ADD FOREIGN KEY (`complaint_report_reporter_identity_id`) REFERENCES `complaint_report` (`reporter_identity_id`);
-
+ALTER TABLE `complaint_report` ADD FOREIGN KEY (`reporter_identity_id`) REFERENCES `identity` (`id`);
 
 ALTER TABLE `complaint_report` ADD FOREIGN KEY (`taken_by_employee_id`) REFERENCES `employee` (`id`);
 
@@ -197,27 +134,9 @@ ALTER TABLE `medical_report` ADD FOREIGN KEY (`event_id`) REFERENCES `event` (`i
 
 ALTER TABLE `medical_report` ADD FOREIGN KEY (`complaint_id`) REFERENCES `complaint_report` (`id`);
 
-CREATE TABLE `entity_medical_report` (
-  `entity_id` integer,
-  `medical_report_injured_entity_id` integer,
-  PRIMARY KEY (`entity_id`, `medical_report_injured_entity_id`)
-);
+ALTER TABLE `medical_report` ADD FOREIGN KEY (`injured_entity_id`) REFERENCES `entity` (`id`);
 
-ALTER TABLE `entity_medical_report` ADD FOREIGN KEY (`entity_id`) REFERENCES `entity` (`id`);
-
-ALTER TABLE `entity_medical_report` ADD FOREIGN KEY (`medical_report_injured_entity_id`) REFERENCES `medical_report` (`injured_entity_id`);
-
-
-CREATE TABLE `identity_medical_report` (
-  `identity_id` integer,
-  `medical_report_inujured_identity_id` integer,
-  PRIMARY KEY (`identity_id`, `medical_report_inujured_identity_id`)
-);
-
-ALTER TABLE `identity_medical_report` ADD FOREIGN KEY (`identity_id`) REFERENCES `identity` (`id`);
-
-ALTER TABLE `identity_medical_report` ADD FOREIGN KEY (`medical_report_inujured_identity_id`) REFERENCES `medical_report` (`inujured_identity_id`);
-
+ALTER TABLE `medical_report` ADD FOREIGN KEY (`inujured_identity_id`) REFERENCES `identity` (`id`);
 
 ALTER TABLE `medical_report` ADD FOREIGN KEY (`taken_by_employee_id`) REFERENCES `employee` (`id`);
 
@@ -227,40 +146,13 @@ ALTER TABLE `location` ADD FOREIGN KEY (`id`) REFERENCES `medical_report` (`occu
 
 ALTER TABLE `arrest_report` ADD FOREIGN KEY (`event_id`) REFERENCES `event` (`id`);
 
-CREATE TABLE `crime_arrest_report` (
-  `crime_id` integer,
-  `arrest_report_crime_id` integer,
-  PRIMARY KEY (`crime_id`, `arrest_report_crime_id`)
-);
-
-ALTER TABLE `crime_arrest_report` ADD FOREIGN KEY (`crime_id`) REFERENCES `crime` (`id`);
-
-ALTER TABLE `crime_arrest_report` ADD FOREIGN KEY (`arrest_report_crime_id`) REFERENCES `arrest_report` (`crime_id`);
-
+ALTER TABLE `arrest_report` ADD FOREIGN KEY (`crime_id`) REFERENCES `crime` (`id`);
 
 ALTER TABLE `arrest_report` ADD FOREIGN KEY (`complaint_id`) REFERENCES `complaint_report` (`id`);
 
-CREATE TABLE `entity_arrest_report` (
-  `entity_id` integer,
-  `arrest_report_arrestee_entity_id` integer,
-  PRIMARY KEY (`entity_id`, `arrest_report_arrestee_entity_id`)
-);
+ALTER TABLE `arrest_report` ADD FOREIGN KEY (`arrestee_entity_id`) REFERENCES `entity` (`id`);
 
-ALTER TABLE `entity_arrest_report` ADD FOREIGN KEY (`entity_id`) REFERENCES `entity` (`id`);
-
-ALTER TABLE `entity_arrest_report` ADD FOREIGN KEY (`arrest_report_arrestee_entity_id`) REFERENCES `arrest_report` (`arrestee_entity_id`);
-
-
-CREATE TABLE `identity_arrest_report` (
-  `identity_id` integer,
-  `arrest_report_arrestee_identity_id` integer,
-  PRIMARY KEY (`identity_id`, `arrest_report_arrestee_identity_id`)
-);
-
-ALTER TABLE `identity_arrest_report` ADD FOREIGN KEY (`identity_id`) REFERENCES `identity` (`id`);
-
-ALTER TABLE `identity_arrest_report` ADD FOREIGN KEY (`arrest_report_arrestee_identity_id`) REFERENCES `arrest_report` (`arrestee_identity_id`);
-
+ALTER TABLE `arrest_report` ADD FOREIGN KEY (`arrestee_identity_id`) REFERENCES `identity` (`id`);
 
 ALTER TABLE `arrest_report` ADD FOREIGN KEY (`arresst_by_employee_id`) REFERENCES `employee` (`id`);
 
@@ -272,16 +164,7 @@ ALTER TABLE `identity` ADD FOREIGN KEY (`id`) REFERENCES `entity` (`primary_inde
 
 ALTER TABLE `identity` ADD FOREIGN KEY (`primary_entity_id`) REFERENCES `entity` (`id`);
 
-CREATE TABLE `location_identity` (
-  `location_id` integer,
-  `identity_last_known_residence` integer,
-  PRIMARY KEY (`location_id`, `identity_last_known_residence`)
-);
-
-ALTER TABLE `location_identity` ADD FOREIGN KEY (`location_id`) REFERENCES `location` (`id`);
-
-ALTER TABLE `location_identity` ADD FOREIGN KEY (`identity_last_known_residence`) REFERENCES `identity` (`last_known_residence`);
-
+ALTER TABLE `identity` ADD FOREIGN KEY (`last_known_residence`) REFERENCES `location` (`id`);
 
 ALTER TABLE `entity` ADD FOREIGN KEY (`id`) REFERENCES `employee` (`entity_id`);
 
