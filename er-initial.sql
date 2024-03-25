@@ -16,7 +16,7 @@ CREATE TABLE `complaint_report` (
 );
 
 CREATE TABLE `medical_report` (
-  `id` integer UNIQUE AUTO_INCREMENT,
+  `id` integer PRIMARY KEY AUTO_INCREMENT,
   `event_id` integer,
   `complaint_id` integer NOT NULL,
   `injured_entity_id` integer,
@@ -24,12 +24,11 @@ CREATE TABLE `medical_report` (
   `taken_by_employee_id` integer NOT NULL,
   `entered_by_employee_id` integer NOT NULL,
   `occurance_location_id` integer,
-  `when_injured` datetime,
-  PRIMARY KEY (`id`, `event_id`)
+  `when_injured` datetime
 );
 
 CREATE TABLE `arrest_report` (
-  `id` integer UNIQUE AUTO_INCREMENT,
+  `id` integer PRIMARY KEY AUTO_INCREMENT,
   `event_id` integer,
   `crime_id` integer,
   `complaint_id` integer NOT NULL,
@@ -38,8 +37,7 @@ CREATE TABLE `arrest_report` (
   `arresst_by_employee_id` integer NOT NULL,
   `entered_by_employee_id` integer NOT NULL,
   `occurance_location_id` integer NOT NULL,
-  `when_occurred` datetime NOT NULL,
-  PRIMARY KEY (`id`, `event_id`)
+  `when_occurred` datetime NOT NULL
 );
 
 CREATE TABLE `entity` (
@@ -105,6 +103,10 @@ CREATE TABLE `crime` (
 );
 
 CREATE INDEX `report_number` ON `complaint_report` (`id`, `event_id`);
+
+CREATE INDEX `report_number` ON `medical_report` (`id`, `event_id`);
+
+CREATE INDEX `report_number` ON `arrest_report` (`id`, `event_id`);
 
 ALTER TABLE `complaint_report` ADD FOREIGN KEY (`event_id`) REFERENCES `event` (`id`);
 
