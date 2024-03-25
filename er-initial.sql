@@ -142,7 +142,7 @@ ALTER TABLE `medical_report` ADD FOREIGN KEY (`taken_by_employee_id`) REFERENCES
 
 ALTER TABLE `medical_report` ADD FOREIGN KEY (`entered_by_employee_id`) REFERENCES `employee` (`id`);
 
-ALTER TABLE `location` ADD FOREIGN KEY (`id`) REFERENCES `medical_report` (`occurance_location_id`);
+ALTER TABLE `medical_report` ADD FOREIGN KEY (`occurance_location_id`) REFERENCES `location` (`id`);
 
 ALTER TABLE `arrest_report` ADD FOREIGN KEY (`event_id`) REFERENCES `event` (`id`);
 
@@ -158,14 +158,14 @@ ALTER TABLE `arrest_report` ADD FOREIGN KEY (`arresst_by_employee_id`) REFERENCE
 
 ALTER TABLE `arrest_report` ADD FOREIGN KEY (`entered_by_employee_id`) REFERENCES `employee` (`id`);
 
-ALTER TABLE `location` ADD FOREIGN KEY (`id`) REFERENCES `arrest_report` (`occurance_location_id`);
+ALTER TABLE `arrest_report` ADD FOREIGN KEY (`occurance_location_id`) REFERENCES `location` (`id`);
 
-ALTER TABLE `identity` ADD FOREIGN KEY (`id`) REFERENCES `entity` (`primary_indentity_id`);
+ALTER TABLE `entity` ADD FOREIGN KEY (`primary_indentity_id`) REFERENCES `identity` (`id`);
 
 ALTER TABLE `identity` ADD FOREIGN KEY (`primary_entity_id`) REFERENCES `entity` (`id`);
 
 ALTER TABLE `identity` ADD FOREIGN KEY (`last_known_residence`) REFERENCES `location` (`id`);
 
-ALTER TABLE `entity` ADD FOREIGN KEY (`id`) REFERENCES `employee` (`entity_id`);
+ALTER TABLE `employee` ADD FOREIGN KEY (`entity_id`) REFERENCES `entity` (`id`);
 
-ALTER TABLE `address` ADD FOREIGN KEY (`id`) REFERENCES `location` (`address_id`);
+ALTER TABLE `location` ADD FOREIGN KEY (`address_id`) REFERENCES `address` (`id`);
