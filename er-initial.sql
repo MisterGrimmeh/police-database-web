@@ -128,7 +128,7 @@ ALTER TABLE `complaint_report` ADD FOREIGN KEY (`taken_by_employee_id`) REFERENC
 
 ALTER TABLE `complaint_report` ADD FOREIGN KEY (`entered_by_employee_id`) REFERENCES `employee` (`id`);
 
-ALTER TABLE `location` ADD FOREIGN KEY (`id`) REFERENCES `complaint_report` (`occurance_location_id`);
+ALTER TABLE `complaint_report` ADD FOREIGN KEY (`occurance_location_id`) REFERENCES `location` (`id`);
 
 ALTER TABLE `medical_report` ADD FOREIGN KEY (`event_id`) REFERENCES `event` (`id`);
 
