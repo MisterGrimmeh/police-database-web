@@ -1,5 +1,5 @@
 CREATE TABLE `complaint_report` (
-  `id` integer UNIQUE AUTO_INCREMENT,
+  `id` integer PRIMARY KEY AUTO_INCREMENT,
   `event_id` integer,
   `crime_id` integer,
   `perpetrator_entity_id` integer,
@@ -12,8 +12,7 @@ CREATE TABLE `complaint_report` (
   `entered_by_employee_id` integer NOT NULL,
   `occurance_location_id` integer,
   `occurance_began` datetime,
-  `occurance_ceased` datetime,
-  PRIMARY KEY (`id`, `event_id`)
+  `occurance_ceased` datetime
 );
 
 CREATE TABLE `medical_report` (
@@ -105,6 +104,8 @@ CREATE TABLE `crime` (
   `class` varchar(1) NOT NULL
 );
 
+CREATE INDEX `report_number` ON `complaint_report` (`id`, `event_id`);
+
 ALTER TABLE `complaint_report` ADD FOREIGN KEY (`event_id`) REFERENCES `event` (`id`);
 
 CREATE TABLE `crime_complaint_report` (
@@ -130,7 +131,7 @@ ALTER TABLE `entity_complaint_report` ADD FOREIGN KEY (`complaint_report_perpetr
 
 
 CREATE TABLE `identity_complaint_report` (
-  `identity_id` interger,
+  `identity_id` integer,
   `complaint_report_perpetrator_identity_id` integer,
   PRIMARY KEY (`identity_id`, `complaint_report_perpetrator_identity_id`)
 );
@@ -152,7 +153,7 @@ ALTER TABLE `entity_complaint_report(1)` ADD FOREIGN KEY (`complaint_report_vict
 
 
 CREATE TABLE `identity_complaint_report(1)` (
-  `identity_id` interger,
+  `identity_id` integer,
   `complaint_report_victim_identity_id` integer,
   PRIMARY KEY (`identity_id`, `complaint_report_victim_identity_id`)
 );
@@ -174,7 +175,7 @@ ALTER TABLE `entity_complaint_report(2)` ADD FOREIGN KEY (`complaint_report_repo
 
 
 CREATE TABLE `identity_complaint_report(2)` (
-  `identity_id` interger,
+  `identity_id` integer,
   `complaint_report_reporter_identity_id` integer,
   PRIMARY KEY (`identity_id`, `complaint_report_reporter_identity_id`)
 );
@@ -206,7 +207,7 @@ ALTER TABLE `entity_medical_report` ADD FOREIGN KEY (`medical_report_injured_ent
 
 
 CREATE TABLE `identity_medical_report` (
-  `identity_id` interger,
+  `identity_id` integer,
   `medical_report_inujured_identity_id` integer,
   PRIMARY KEY (`identity_id`, `medical_report_inujured_identity_id`)
 );
@@ -249,7 +250,7 @@ ALTER TABLE `entity_arrest_report` ADD FOREIGN KEY (`arrest_report_arrestee_enti
 
 
 CREATE TABLE `identity_arrest_report` (
-  `identity_id` interger,
+  `identity_id` integer,
   `arrest_report_arrestee_identity_id` integer,
   PRIMARY KEY (`identity_id`, `arrest_report_arrestee_identity_id`)
 );
