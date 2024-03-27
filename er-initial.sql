@@ -42,7 +42,7 @@ CREATE TABLE `arrest_report` (
 
 CREATE TABLE `entity` (
   `id` integer PRIMARY KEY AUTO_INCREMENT,
-  `primary_indentity_id` integer
+  `primary_identity_id` integer
 );
 
 CREATE TABLE `identity` (
