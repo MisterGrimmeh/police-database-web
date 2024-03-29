@@ -1,0 +1,35 @@
+@charset "utf-8";
+
+html {
+    font-family: sans-serif;
+}
+
+body {
+    max-width: 50%;
+    margin: auto;
+}
+
+form {
+    padding: 1rem 0;
+}
+div {
+    display: block;
+    padding: 0.25rem;
+}
+
+fieldset {
+    border-style: solid;
+    border-left: none;
+    padding: 1rem 0;
+    padding-right: 1rem;
+    margin: 1rem 0;
+}
+
+legend {
+    font-weight: bold;
+}
+
+label {
+    display: block;
+    width: 20%;
+}
