@@ -9,6 +9,14 @@ a, a:link, a:hover, a:visited, a:active {
 }
 
 fieldset {
+    width: auto;
+}
+
+form div {
+    margin: 0.5rem 0;
+}
+
+fieldset {
     border-style: solid;
 }
 
