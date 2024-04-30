@@ -1,106 +1,116 @@
-CREATE TABLE `complaint_report` (
-  `id` integer PRIMARY KEY AUTO_INCREMENT,
-  `event_id` integer,
-  `crime_id` integer,
-  `perpetrator_entity_id` integer,
-  `perpetrator_identity_id` integer,
-  `victim_entity_id` integer,
-  `victim_identity_id` integer,
-  `reporter_entity_id` integer,
-  `reporter_identity_id` integer,
-  `taken_by_employee_id` integer NOT NULL,
-  `entered_by_employee_id` integer NOT NULL,
-  `occurance_location_id` integer,
-  `occurance_began` datetime,
-  `occurance_ceased` datetime
-);
+CREATE TABLE
+  `complaint_report` (
+    `id` integer PRIMARY KEY AUTO_INCREMENT,
+    `event_id` integer,
+    `crime_id` integer,
+    `perpetrator_entity_id` integer,
+    `perpetrator_identity_id` integer,
+    `victim_entity_id` integer,
+    `victim_identity_id` integer,
+    `reporter_entity_id` integer,
+    `reporter_identity_id` integer,
+    `taken_by_employee_id` integer NOT NULL,
+    `entered_by_employee_id` integer NOT NULL,
+    `occurance_location_id` integer,
+    `occurance_began` datetime,
+    `occurance_ceased` datetime
+  );
 
-CREATE TABLE `medical_report` (
-  `id` integer PRIMARY KEY AUTO_INCREMENT,
-  `event_id` integer,
-  `complaint_id` integer NOT NULL,
-  `injured_entity_id` integer,
-  `inujured_identity_id` integer,
-  `taken_by_employee_id` integer NOT NULL,
-  `entered_by_employee_id` integer NOT NULL,
-  `occurance_location_id` integer,
-  `when_injured` datetime
-);
+CREATE TABLE
+  `medical_report` (
+    `id` integer PRIMARY KEY AUTO_INCREMENT,
+    `event_id` integer,
+    `complaint_id` integer NOT NULL,
+    `injured_entity_id` integer,
+    `inujured_identity_id` integer,
+    `taken_by_employee_id` integer NOT NULL,
+    `entered_by_employee_id` integer NOT NULL,
+    `occurance_location_id` integer,
+    `when_injured` datetime
+  );
 
-CREATE TABLE `arrest_report` (
-  `id` integer PRIMARY KEY AUTO_INCREMENT,
-  `event_id` integer,
-  `crime_id` integer,
-  `complaint_id` integer NOT NULL,
-  `arrestee_entity_id` integer NOT NULL,
-  `arrestee_identity_id` integer NOT NULL,
-  `arresst_by_employee_id` integer NOT NULL,
-  `entered_by_employee_id` integer NOT NULL,
-  `occurance_location_id` integer NOT NULL,
-  `when_occurred` datetime NOT NULL
-);
+CREATE TABLE
+  `arrest_report` (
+    `id` integer PRIMARY KEY AUTO_INCREMENT,
+    `event_id` integer,
+    `crime_id` integer,
+    `complaint_id` integer NOT NULL,
+    `arrestee_entity_id` integer NOT NULL,
+    `arrestee_identity_id` integer NOT NULL,
+    `arresst_by_employee_id` integer NOT NULL,
+    `entered_by_employee_id` integer NOT NULL,
+    `occurance_location_id` integer NOT NULL,
+    `when_occurred` datetime NOT NULL
+  );
 
-CREATE TABLE `entity` (
-  `id` integer PRIMARY KEY AUTO_INCREMENT,
-  `primary_identity_id` integer
-);
+CREATE TABLE
+  `entity` (
+    `id` integer PRIMARY KEY AUTO_INCREMENT,
+    `primary_identity_id` integer
+  );
 
-CREATE TABLE `identity` (
-  `id` integer PRIMARY KEY AUTO_INCREMENT,
-  `primary_entity_id` integer,
-  `first_name` varchar(35),
-  `middle_name` varchar(35),
-  `last_name` varchar(35),
-  `alias` varchar(35),
-  `date_of_birth` date,
-  `last_known_residence` integer,
-  `tel_number` integer,
-  `email` varchar(320)
-);
+CREATE TABLE
+  `identity` (
+    `id` integer PRIMARY KEY AUTO_INCREMENT,
+    `primary_entity_id` integer,
+    `first_name` varchar(35),
+    `middle_name` varchar(35),
+    `last_name` varchar(35),
+    `alias` varchar(35),
+    `date_of_birth` date,
+    `last_known_residence` integer,
+    `tel_number` integer,
+    `email` varchar(320)
+  );
 
-CREATE TABLE `employee` (
-  `id` integer PRIMARY KEY AUTO_INCREMENT,
-  `entity_id` integer NOT NULL,
-  `title` varchar(35) NOT NULL
-);
+CREATE TABLE
+  `employee` (
+    `id` integer PRIMARY KEY AUTO_INCREMENT,
+    `entity_id` integer NOT NULL,
+    `title` varchar(35) NOT NULL
+  );
 
-CREATE TABLE `location` (
-  `id` integer PRIMARY KEY AUTO_INCREMENT,
-  `address_id` integer,
-  `geo_lat` decimal,
-  `geo_long` decimal,
-  `primary_street` varchar(35),
-  `secondary_street` varchar(35),
-  `tertiary_street` varchar(35),
-  `city` varchar(35),
-  `region` varchar(35),
-  `country_code` varchar(3),
-  `fulltext_desc` varchar(512)
-);
+CREATE TABLE
+  `location` (
+    `id` integer PRIMARY KEY AUTO_INCREMENT,
+    `address_id` integer,
+    `geo_lat` decimal,
+    `geo_long` decimal,
+    `primary_street` varchar(35),
+    `secondary_street` varchar(35),
+    `tertiary_street` varchar(35),
+    `city` varchar(35),
+    `region` varchar(35),
+    `country_code` varchar(3),
+    `fulltext_desc` varchar(512)
+  );
 
-CREATE TABLE `address` (
-  `id` integer PRIMARY KEY AUTO_INCREMENT,
-  `building_number` varchar(20) NOT NULL,
-  `unit_number` varchar(20),
-  `street_name` varchar(35) NOT NULL,
-  `city_name` varchar(35) NOT NULL,
-  `postal_code` varchar(10) NOT NULL,
-  `state_code` varchar(3) NOT NULL,
-  `mailing_address_fulltext` varchar(255)
-);
+CREATE TABLE
+  `address` (
+    `id` integer PRIMARY KEY AUTO_INCREMENT,
+    `building_number` varchar(20) NOT NULL,
+    `unit_number` varchar(20),
+    `street_name` varchar(35) NOT NULL,
+    `city_name` varchar(35) NOT NULL,
+    `postal_code` varchar(10) NOT NULL,
+    `state_code` varchar(3) NOT NULL,
+    `mailing_address_fulltext` varchar(255)
+  );
 
-CREATE TABLE `event` (
-  `id` integer PRIMARY KEY AUTO_INCREMENT,
-  `occurance_began` datetime,
-  `occurance_ceased` datetime
-);
+CREATE TABLE
+  `event` (
+    `id` integer PRIMARY KEY AUTO_INCREMENT,
+    `occurance_began` datetime,
+    `occurance_ceased` datetime
+  );
 
-CREATE TABLE `crime` (
-  `id` integer PRIMARY KEY AUTO_INCREMENT,
-  `title` varchar(255),
-  `code` varchar(40) NOT NULL,
-  `class` varchar(1) NOT NULL
-);
+CREATE TABLE
+  `crime` (
+    `id` integer PRIMARY KEY AUTO_INCREMENT,
+    `title` varchar(255),
+    `code` varchar(40) NOT NULL,
+    `class` varchar(1) NOT NULL
+  );
 
 CREATE INDEX `report_number` ON `complaint_report` (`id`, `event_id`);
 
