@@ -311,8 +311,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                             ?>
                                 <option value="<?php echo $complaint['id']; ?>" <?php if ($arrest[0]['complaint_id'] == $complaint['id']) {
-                                                                                print('selected');
-                                                                            } ?>><?php echo $complaint['id']; ?></option>
+                                                                                    print('selected');
+                                                                                } ?>><?php echo $complaint['id']; ?></option>
 
                             <?php
 
@@ -345,9 +345,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 ?>
                 <fieldset>
-                    <legend>Perpetrator</legend>
+                    <legend>Arrestee</legend>
                     <div>
-                        <label for="perp_id">Perpetrator ID:</label>
+                        <label for="perp_id">Arrestee ID:</label>
                         <select id="perp_id" name="perp_id">
                             <option value=""></option>
                             <?php
