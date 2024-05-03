@@ -15,6 +15,6 @@
     </head>
     <body>
         <header>
-            <h1><?php echo $site_title; ?></h1>
+            <h1><a href="index.php"><?php echo $site_title; ?></a></h1>
         </header>
     

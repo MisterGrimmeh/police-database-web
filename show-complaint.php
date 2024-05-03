@@ -3,9 +3,7 @@
 require_once('config.php');
 require_once('database.php');
 
-$page_title = "See Complaint";
-include('header.php');
-
+$page_title = "Complaint Reports";
 $request_id;
 $db_select_complaint_stmt;
 
@@ -13,9 +11,12 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $request_id = intval($_GET['id']);
     $db_select_complaint_stmt = $db_conn->prepare('SELECT * FROM `complaint_report` WHERE `id` = :id');
     $db_select_complaint_stmt->bindParam(':id', $request_id, PDO::PARAM_INT);
+    $page_title = "Complaint Report #" . $request_id;
 } else {
     $db_select_complaint_stmt = $db_conn->prepare('SELECT * FROM `complaint_report`');
 }
+
+include('header.php');
 
 try {
     $db_select_complaint_stmt->execute();
@@ -26,11 +27,14 @@ try {
 ?>
 <section>
     <header>
-        <h1>Show Complaint <a href="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">&larr;</a></h1>
         <?php if (isset($request_id)) {
         ?>
-            <h2>Complaint #<?php print($request_id); ?></h2>
+            <h1><a href="show-complaint.php">Complaint Report #<?php print($request_id); ?></a></h1>
         <?php
+        } else {
+            ?>
+            <h1>All Complaint Reports</h1>
+            <?php
         }
 
         if ($dev_mode) {

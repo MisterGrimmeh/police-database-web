@@ -172,6 +172,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } catch (PDOException $e) {
         echo $e->getMessage(); // TODO: meaningful database exceptions
     }
+
+    $redirect_show_id = $db_conn->lastInsertId();
+    header('Location: show-complaint.php?id='. $redirect_show_id, true, 303);
+
 } elseif ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 ?>
@@ -179,7 +183,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <section>
 
         <header>
-            <h1>New Complaint <a href="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">&larr;</a></h1>
+            <h1><a href="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">New Complaint</a></h1>
             <?php
 
             if ($dev_mode) {

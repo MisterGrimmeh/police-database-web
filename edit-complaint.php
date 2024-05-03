@@ -203,7 +203,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($request_action == 'd') {
         $db_delete_complaint_stmt = $db_conn->prepare('DELETE FROM `complaint_report` WHERE `id` = :id');
-        $db_update_complaint_stmt->bindParam(':id', $request_id);
+        $db_delete_complaint_stmt->bindParam(':id', $request_id);
+
+        try {
+            $db_delete_complaint_stmt->execute();
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+
         header('Location: show-complaint.php', true, 303);
     } elseif ($request_action == 'e') {
 
