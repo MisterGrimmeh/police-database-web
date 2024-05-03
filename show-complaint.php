@@ -32,9 +32,9 @@ try {
             <h1><a href="show-complaint.php">Complaint Report #<?php print($request_id); ?></a></h1>
         <?php
         } else {
-            ?>
+        ?>
             <h1>All Complaint Reports</h1>
-            <?php
+        <?php
         }
 
         if ($dev_mode) {
@@ -135,6 +135,46 @@ try {
                 }
                 $reporter = $db_select_reporter_data_stmt->fetchAll(PDO::FETCH_BOTH);
 
+                // fetch the taking employee's identity ID
+                $db_select_taking_employee_id_stmt = $db_conn->prepare('SELECT `primary_identity_id` FROM `entity` WHERE `id` = :id LIMIT 1');
+                $db_select_taking_employee_id_stmt->bindParam(':id', $row['taken_by_employee_id'], PDO::PARAM_INT);
+                try {
+                    $db_select_taking_employee_id_stmt->execute();
+                } catch (PDOException $e) {
+                    echo $e->getMessage(); // TODO: meaningful database exceptions
+                }
+                $taking_employee_id = $db_select_taking_employee_id_stmt->fetchColumn();
+
+                // fetch the taking employee's identity data
+                $db_select_taking_employee_data_stmt = $db_conn->prepare('SELECT * FROM `identity` WHERE `id` = :id');
+                $db_select_taking_employee_data_stmt->bindParam(':id', $taking_employee_id, PDO::PARAM_INT);
+                try {
+                    $db_select_taking_employee_data_stmt->execute();
+                } catch (PDOException $e) {
+                    echo $e->getMessage(); // TODO: meaningful database exceptions
+                }
+                $taking_employee = $db_select_taking_employee_data_stmt->fetchAll(PDO::FETCH_BOTH);
+
+                // fetch the entering employee's identity ID
+                $db_select_entering_employee_id_stmt = $db_conn->prepare('SELECT `primary_identity_id` FROM `entity` WHERE `id` = :id LIMIT 1');
+                $db_select_entering_employee_id_stmt->bindParam(':id', $row['entered_by_employee_id'], PDO::PARAM_INT);
+                try {
+                    $db_select_entering_employee_id_stmt->execute();
+                } catch (PDOException $e) {
+                    echo $e->getMessage(); // TODO: meaningful database exceptions
+                }
+                $entering_employee_id = $db_select_entering_employee_id_stmt->fetchColumn();
+
+                // fetch the entering employee's identity data
+                $db_select_entering_employee_data_stmt = $db_conn->prepare('SELECT * FROM `identity` WHERE `id` = :id');
+                $db_select_entering_employee_data_stmt->bindParam(':id', $entering_employee_id, PDO::PARAM_INT);
+                try {
+                    $db_select_entering_employee_data_stmt->execute();
+                } catch (PDOException $e) {
+                    echo $e->getMessage(); // TODO: meaningful database exceptions
+                }
+                $entering_employee = $db_select_entering_employee_data_stmt->fetchAll(PDO::FETCH_BOTH);
+
             ?>
                 <tr>
                     <td><?php echo $row['id']; ?></td>
@@ -191,8 +231,24 @@ try {
                             print('<br>' . $element['city_name'] . ', ' . $element['state_code'] . ' ' . $element['postal_code']);
                         }
                         ?></td>
-                    <td><?php echo $row['taken_by_employee_id']; ?></td>
-                    <td><?php echo $row['entered_by_employee_id']; ?></td>
+                    <td><?php foreach ($taking_employee as $element) {
+                            print($element['first_name'] . ' ');
+                            if (isset($element['middle_name'])) {
+                                print(substr($element['middle_name'] . ' ', 0, 1));
+                            }
+                            print($element['last_name']);
+                        }
+
+                        ?></td>
+                    <td><?php foreach ($entering_employee as $element) {
+                            print($element['first_name'] . ' ');
+                            if (isset($element['middle_name'])) {
+                                print(substr($element['middle_name'] . ' ', 0, 1));
+                            }
+                            print($element['last_name']);
+                        }
+
+                        ?></td>
                     <td><a href="?id=<?php echo $row['id']; ?>">show</a> <a href="edit-complaint.php?a=delete&id=<?php echo $row['id']; ?>">delete</a> <a href="edit-complaint.php?a=edit&id=<?php echo $row['id']; ?>">edit</a></td>
                 </tr>
             <?php
