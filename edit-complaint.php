@@ -509,7 +509,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </div>
                 </fieldset>
                 <div>
-                    <input type="submit" value="Submit new complaint">
+                    <input type="submit" value="Update complaint">
                 </div>
             </form>
 
