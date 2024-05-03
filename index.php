@@ -16,8 +16,8 @@ include('header.php');
         </header>
         <ul>
             <li><a href="show-complaint.php">Complaints</a></li>
-            <li>Medical</li>
-            <li>Arrests</li>
+            <li><a href="show-medical.php">Medical</a></li>
+            <li><a href="show-arrest.php">Arrests</a></li>
         </ul>
     </section>
 </section>
