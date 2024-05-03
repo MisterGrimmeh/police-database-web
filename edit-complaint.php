@@ -230,11 +230,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <section>
 
             <header>
-                <h1>New Complaint <a href="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">&larr;</a></h1>
                 <?php if (isset($request_id)) {
                 ?>
-                    <h2>Complaint #<?php print($request_id); ?></h2>
+                    <h1>Editing Complaint #<?php print($request_id); ?></h1>
                 <?php
+                } else {
+                    ?>
+                    <h1>Edting Complaint</h1>
+                    <?php
                 }
 
                 if ($dev_mode) {
