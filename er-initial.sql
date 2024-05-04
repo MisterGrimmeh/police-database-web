@@ -179,3 +179,7 @@ ALTER TABLE `identity` ADD FOREIGN KEY (`last_known_residence`) REFERENCES `loca
 ALTER TABLE `employee` ADD FOREIGN KEY (`entity_id`) REFERENCES `entity` (`id`);
 
 ALTER TABLE `location` ADD FOREIGN KEY (`address_id`) REFERENCES `address` (`id`);
+
+CREATE VIEW open_complaint AS SELECT * FROM `complaint_report` WHERE `occurance_ceased` IS NULL;
+
+CREATE VIEW show_employees AS SELECT `entity`.`id` AS `entity_id`, `employee`.`id` AS `employee_id`, `first_name`, `middle_name`, `last_name`, `alias`, `date_of_birth`, `last_known_residence`, `tel_number`, `email` FROM `identity` JOIN `entity` ON `identity`.`id` = `entity`.`primary_identity_id` JOIN `employee` ON `entity`.`id` = `employee`.`entity_id`;

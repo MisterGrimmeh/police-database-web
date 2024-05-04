@@ -371,7 +371,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <legend>Employees</legend>
                     <?php
 
-                    $db_select_employees_stmt = $db_conn->prepare('SELECT * FROM identity JOIN entity ON identity.id = entity.primary_identity_id JOIN employee ON entity.id = employee.entity_id');
+                    $db_select_employees_stmt = $db_conn->prepare('SELECT * FROM `show_employees`');
 
                     try {
                         $db_select_employees_stmt->execute();
@@ -391,7 +391,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             foreach ($employees as $employee) {
 
                             ?>
-                                <option value="<?php echo $employee['id']; ?>" <?php if ($arrest[0]['arresst_by_employee_id'] == $employee['entity_id']) {
+                                <option value="<?php echo $employee['employee_id']; ?>" <?php if ($arrest[0]['arresst_by_employee_id'] == $employee['entity_id']) {
                                                                                     print('selected');
                                                                                 } ?>><?php echo $employee['first_name'] . " " . $employee['last_name']; ?></option>
 
@@ -411,7 +411,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             foreach ($employees as $employee) {
 
                             ?>
-                                <option value="<?php echo $employee['id']; ?>" <?php if ($arrest[0]['entered_by_employee_id'] == $employee['entity_id']) {
+                                <option value="<?php echo $employee['employee_id']; ?>" <?php if ($arrest[0]['entered_by_employee_id'] == $employee['entity_id']) {
                                                                                     print('selected');
                                                                                 } ?>><?php echo $employee['first_name'] . " " . $employee['last_name']; ?></option>
 
