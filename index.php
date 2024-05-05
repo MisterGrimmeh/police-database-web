@@ -15,7 +15,7 @@ include('header.php');
             <h2>Reports</h2>
         </header>
         <ul>
-            <li><a href="show-complaint.php">Complaints</a></li>
+            <li><a href="show-complaint.php">Complaints</a> (<a href="show-open-complaint.php">open complaints only</a>)</li>
             <li><a href="show-medical.php">Medical</a></li>
             <li><a href="show-arrest.php">Arrests</a></li>
         </ul>
