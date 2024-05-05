@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     }
 
     $redirect_show_id = $db_conn->lastInsertId();
-    header('Location: show-entity.php?id=' . $request_id, true, 303);
+    header('Location: edit-identity.php?id=' . $request_id, true, 303);
 
 }
 

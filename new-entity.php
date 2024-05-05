@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     $redirect_show_id = $db_conn->lastInsertId();
-    header('Location: show-entity.php?id=' . $redirect_show_id, true, 303);
+    header('Location: edit-entity.php?id=' . $redirect_show_id, true, 303);
 } elseif ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 ?>
