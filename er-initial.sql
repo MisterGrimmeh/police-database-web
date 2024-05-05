@@ -185,9 +185,18 @@ CREATE VIEW open_complaint AS SELECT * FROM `complaint_report` WHERE `occurance_
 CREATE VIEW show_employees AS SELECT `entity`.`id` AS `entity_id`, `employee`.`id` AS `employee_id`, `first_name`, `middle_name`, `last_name`, `alias`, `date_of_birth`, `last_known_residence`, `tel_number`, `email` FROM `identity` JOIN `entity` ON `identity`.`id` = `entity`.`primary_identity_id` JOIN `employee` ON `entity`.`id` = `employee`.`entity_id`;
 
 delimiter //
+CREATE FUNCTION number_identities_for_entity(entity_id int) RETURNS int DETERMINISTIC
+  BEGIN
+    DECLARE number_of_identities INT;
+    SELECT COUNT(*) FROM `identity` WHERE `primary_entity_id` = entity_id INTO number_of_identities;
+    RETURN number_of_identities;
+  END //
+delimiter ;
+
+delimiter //
 CREATE PROCEDURE GetIdentityForEntity(IN entity_id int)
 BEGIN
-  SELECT * FROM `identity` WHERE `id` = (SELECT `primary_identity_id` FROM `entity` WHERE `id` = entity_id);
+  SELECT *, number_identities_for_entity(entity_id) AS number_of_identities FROM `identity` WHERE `id` = (SELECT `primary_identity_id` FROM `entity` WHERE `id` = entity_id);
 END //
 delimiter ;
 

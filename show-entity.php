@@ -115,6 +115,16 @@ try {
         ?>
     </table>
     <?php if (isset($request_id)) {
+
+        $db_select_all_identities_for_entity = $db_conn->prepare('CALL GetAllIdentitiesForEntity(:id)');
+        $db_select_all_identities_for_entity->bindParam(':id', $request_id, PDO::PARAM_INT);
+        try {
+            $db_select_all_identities_for_entity->execute();
+        } catch (PDOException $e) {
+            echo $e->getMessage(); // TODO: meaningful database exceptions
+        }
+        $identities = $db_select_all_identities_for_entity->fetchAll(PDO::FETCH_BOTH);
+
     ?>
         <h2>All identities for entity</h2>
         <table>
@@ -135,16 +145,8 @@ try {
             <tbody>
                 <?php
 
-                $db_select_all_identities_for_entity = $db_conn->prepare('CALL GetAllIdentitiesForEntity(:id)');
-                $db_select_all_identities_for_entity->bindParam(':id', $request_id, PDO::PARAM_INT);
-                try {
-                    $db_select_all_identities_for_entity->execute();
-                } catch (PDOException $e) {
-                    echo $e->getMessage(); // TODO: meaningful database exceptions
-                }
-                $identities = $db_select_all_identities_for_entity->fetchAll(PDO::FETCH_BOTH);
-
                 foreach ($identities as $id) {
+
                 ?>
                     <tr>
                         <td><?php print($id['id']); ?></td>
