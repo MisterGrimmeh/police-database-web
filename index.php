@@ -28,6 +28,7 @@ include('header.php');
             <li><a href="show-entity.php">Identities</a></li>
             <li><a href="show-location.php">Locations</a></li>
             <li><a href="show-address.php">Addresses</a></li>
+            <li><a href="event-crud.php">Events</a></li>
         </ul>
     </section>
 </section>
