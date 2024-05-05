@@ -7,7 +7,7 @@ $db_password = "easypass";
 $db_name = "nyu_project";
 $db_host = "localhost";
 
-$dev_mode = TRUE;
+$dev_mode = FALSE;
 
 if($dev_mode) {
     ini_set('display_errors', '1');
