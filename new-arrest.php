@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['perp_id']) && is_numeric($_POST['perp_id'])) {
         $form_d_arrestee_entity_id = intval($_POST['perp_id']);
 
-        $db_select_perp_id_stmt = $db_conn->prepare('SELECT `id` FROM `identity` WHERE `primary_entity_id` = :entity_id LIMIT 1');
+        $db_select_perp_id_stmt = $db_conn->prepare('CALL GetIdentityForEntity(:entity_id)');
         $db_select_perp_id_stmt->bindParam(':entity_id', $form_d_arrestee_entity_id, PDO::PARAM_INT);
 
         try {
@@ -59,6 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         $perp_id = $db_select_perp_id_stmt->fetchAll(PDO::FETCH_BOTH);
+        $db_select_perp_id_stmt->closeCursor();
         $form_d_arrestee_identity_id = intval($perp_id[0]['id']);
     }
 
@@ -128,7 +129,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     $redirect_show_id = $db_conn->lastInsertId();
-    header('Location: show-arrest.php?id=' . $redirect_show_id, true, 303);
+    //header('Location: show-arrest.php?id=' . $redirect_show_id, true, 303);
 } elseif ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 ?>
