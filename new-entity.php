@@ -8,10 +8,10 @@ include('header.php');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    $$form_s_primary_identity_id = null;
+    $form_s_primary_identity_id = null;
 
     if (isset($_POST['primary_identity_id']) && is_numeric($_POST['primary_identity_id'])) {
-        $form_s_complaint_id = intval($_POST['primary_identity_id']);
+        $form_s_primary_identity_id = intval($_POST['primary_identity_id']);
     }
 
     if ($dev_mode) {
@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <fieldset>
                 <div>
                     <label for="primary_identity_id">Primary identity:</label>
-                    <select id="primary_identity_id" name="primary_identity_id" required>
+                    <select id="primary_identity_id" name="primary_identity_id">
                         <option value="" selected></option>
                         <?php
 

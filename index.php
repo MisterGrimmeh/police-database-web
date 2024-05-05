@@ -20,6 +20,14 @@ include('header.php');
             <li><a href="show-arrest.php">Arrests</a></li>
         </ul>
     </section>
+    <section>
+        <header>
+            <h2>Management</h2>
+        </header>
+        <ul>
+            <li><a href="show-entity.php">Entities/identities</a></li>
+        </ul>
+    </section>
 </section>
 <?php
 

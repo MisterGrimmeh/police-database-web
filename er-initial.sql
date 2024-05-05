@@ -59,7 +59,7 @@ CREATE TABLE
     `alias` varchar(35),
     `date_of_birth` date,
     `last_known_residence` integer,
-    `tel_number` integer,
+    `tel_number` varchar(15),
     `email` varchar(320)
   );
 
@@ -183,3 +183,25 @@ ALTER TABLE `location` ADD FOREIGN KEY (`address_id`) REFERENCES `address` (`id`
 CREATE VIEW open_complaint AS SELECT * FROM `complaint_report` WHERE `occurance_ceased` IS NULL;
 
 CREATE VIEW show_employees AS SELECT `entity`.`id` AS `entity_id`, `employee`.`id` AS `employee_id`, `first_name`, `middle_name`, `last_name`, `alias`, `date_of_birth`, `last_known_residence`, `tel_number`, `email` FROM `identity` JOIN `entity` ON `identity`.`id` = `entity`.`primary_identity_id` JOIN `employee` ON `entity`.`id` = `employee`.`entity_id`;
+
+delimiter //
+CREATE PROCEDURE GetIdentityForEntity(IN entity_id int)
+BEGIN
+  SELECT * FROM `identity` WHERE `id` = (SELECT `primary_identity_id` FROM `entity` WHERE `id` = entity_id);
+END //
+delimiter ;
+
+delimiter //
+CREATE PROCEDURE GetAllIdentitiesForEntity(IN entity_id int)
+BEGIN
+  SELECT * FROM `identity` WHERE `primary_entity_id` = entity_id;
+END //
+delimiter ;
+
+delimiter //
+CREATE TRIGGER create_placeholder_id AFTER INSERT ON `entity`
+  FOR EACH ROW
+    BEGIN
+      INSERT INTO `identity` (`primary_entity_id`) VALUES (NEW.id);
+    END //
+delimiter ;*
