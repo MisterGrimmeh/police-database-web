@@ -13,7 +13,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $db_select_entity_stmt->bindParam(':id', $request_id, PDO::PARAM_INT);
     $page_title = "Entity #" . $request_id;
 } else {
-    $db_select_entity_stmt = $db_conn->prepare('SELECT * FROM `entity`');
+    $db_select_entity_stmt = $db_conn->prepare('SELECT * FROM `entity`  ORDER BY `id` ASC');
 }
 
 include('header.php');
@@ -66,7 +66,7 @@ try {
 
             foreach ($entity as $row) {
 
-                $db_select_primary_id_data_stmt = $db_conn->prepare('SELECT * FROM `identity` WHERE `id` = :id');
+                $db_select_primary_id_data_stmt = $db_conn->prepare('SELECT * FROM `identity` WHERE `id` = :id ORDER BY `id` ASC');
                 $db_select_primary_id_data_stmt->bindParam(':id', $row['primary_identity_id'], PDO::PARAM_INT);
                 try {
                     $db_select_primary_id_data_stmt->execute();

@@ -19,6 +19,14 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $form_s_primary_entity_id = null;
+    $form_s_first_name = null;
+    $form_s_middle_name = null;
+    $form_s_last_name = null;
+    $form_s_alias = null;
+    $form_s_date_of_birth = null;
+    $form_s_tel_number = null;
+    $form_s_email = null;
+    $form_s_last_known_residence = null;
 
     if (isset($_POST['primary_entity_id']) && is_numeric($_POST['primary_entity_id'])) {
         $form_s_primary_entity_id = intval($_POST['primary_entity_id']);
@@ -41,14 +49,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     if (isset($_POST['date_of_birth'])) {
-        var_dump($_POST['date_of_birth']);
-        $form_s_date_of_birth = $_POST['date_of_birth'];
+        if ($_POST['date_of_birth'] == '') {
+            $form_s_date_of_birth = null;
+        } else {
+            $form_s_date_of_birth = $_POST['date_of_birth'];
+        }
     }
 
     if (isset($_POST['tel_number']) && is_numeric($_POST['tel_number']) && strlen((string)$_POST['tel_number']) <= 15) {
-        var_dump($_POST['tel_number']);
         $form_s_tel_number = (string)$_POST['tel_number'];
-        var_dump($form_s_tel_number);
     }
 
     if (isset($_POST['email']) && strlen($_POST['email']) <= 320) {
@@ -62,6 +71,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($dev_mode) {
         print('<b>$form_s_primary_entity_id =</b>');
         var_dump($form_s_primary_entity_id);
+        print('<b>$form_s_date_of_birth =</b>');
+        var_dump($form_s_date_of_birth);
     }
 
     $db_update_identity_stmt = $db_conn->prepare('UPDATE `identity` SET
@@ -92,7 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo $e->getMessage(); // TODO: meaningful database exceptions
     }
 
-    header('Location: show-entity.php?id=' . $form_s_primary_entity_id, true, 303);
+    //header('Location: show-entity.php?id=' . $form_s_primary_entity_id, true, 303);
 } elseif ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
     $request_action;
@@ -187,7 +198,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             foreach ($entities as $row) {
 
                             ?>
-                                <option value="<?php echo $row['id']; ?>" <?php if ($identity[0]['id'] == $row['primary_identity_id']) {
+                                <option value="<?php echo $row['id']; ?>" <?php if ($row['id'] == $identity[0]['primary_entity_id']) {
                                                                                 print('selected');
                                                                             } ?>><?php echo $row['id']; ?></option>
 
