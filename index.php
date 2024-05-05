@@ -25,7 +25,9 @@ include('header.php');
             <h2>Management</h2>
         </header>
         <ul>
-            <li><a href="show-entity.php">Entities/identities</a></li>
+            <li><a href="show-entity.php">Identities</a></li>
+            <li><a href="show-location.php">Locations</a></li>
+            <li><a href="show-address.php">Addresses</a></li>
         </ul>
     </section>
 </section>

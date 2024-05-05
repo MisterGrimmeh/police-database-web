@@ -180,37 +180,87 @@ ALTER TABLE `employee` ADD FOREIGN KEY (`entity_id`) REFERENCES `entity` (`id`);
 
 ALTER TABLE `location` ADD FOREIGN KEY (`address_id`) REFERENCES `address` (`id`);
 
-CREATE VIEW open_complaint AS SELECT * FROM `complaint_report` WHERE `occurance_ceased` IS NULL;
+CREATE VIEW
+  open_complaint AS
+SELECT
+  *
+FROM
+  `complaint_report`
+WHERE
+  `occurance_ceased` IS NULL;
 
-CREATE VIEW show_employees AS SELECT `entity`.`id` AS `entity_id`, `employee`.`id` AS `employee_id`, `first_name`, `middle_name`, `last_name`, `alias`, `date_of_birth`, `last_known_residence`, `tel_number`, `email` FROM `identity` JOIN `entity` ON `identity`.`id` = `entity`.`primary_identity_id` JOIN `employee` ON `entity`.`id` = `employee`.`entity_id`;
+CREATE VIEW
+  show_employees AS
+SELECT
+  `entity`.`id` AS `entity_id`,
+  `employee`.`id` AS `employee_id`,
+  `first_name`,
+  `middle_name`,
+  `last_name`,
+  `alias`,
+  `date_of_birth`,
+  `last_known_residence`,
+  `tel_number`,
+  `email`
+FROM
+  `identity`
+  JOIN `entity` ON `identity`.`id` = `entity`.`primary_identity_id`
+  JOIN `employee` ON `entity`.`id` = `employee`.`entity_id`;
 
-delimiter //
-CREATE FUNCTION number_identities_for_entity(entity_id int) RETURNS int DETERMINISTIC
-  BEGIN
-    DECLARE number_of_identities INT;
-    SELECT COUNT(*) FROM `identity` WHERE `primary_entity_id` = entity_id INTO number_of_identities;
-    RETURN number_of_identities;
-  END //
-delimiter ;
+DELIMITER //
 
-delimiter //
-CREATE PROCEDURE GetIdentityForEntity(IN entity_id int)
-BEGIN
-  SELECT *, number_identities_for_entity(entity_id) AS number_of_identities FROM `identity` WHERE `id` = (SELECT `primary_identity_id` FROM `entity` WHERE `id` = entity_id);
+CREATE FUNCTION number_identities_for_entity (entity_id int) RETURNS int DETERMINISTIC BEGIN
+
+DECLARE number_of_identities INT;
+
+SELECT
+  COUNT(*)
+FROM
+  `identity`
+WHERE
+  `primary_entity_id` = entity_id INTO number_of_identities;
+
+RETURN number_of_identities;
+
 END //
-delimiter ;
 
-delimiter //
-CREATE PROCEDURE GetAllIdentitiesForEntity(IN entity_id int)
-BEGIN
-  SELECT * FROM `identity` WHERE `primary_entity_id` = entity_id;
+CREATE PROCEDURE GetIdentityForEntity (IN entity_id int) BEGIN
+
+SELECT
+  *,
+  number_identities_for_entity (entity_id) AS number_of_identities
+FROM
+  `identity`
+WHERE
+  `id` = (
+    SELECT
+      `primary_identity_id`
+    FROM
+      `entity`
+    WHERE
+      `id` = entity_id
+  );
+
 END //
-delimiter ;
 
-delimiter //
-CREATE TRIGGER create_placeholder_id AFTER INSERT ON `entity`
-  FOR EACH ROW
-    BEGIN
-      INSERT INTO `identity` (`primary_entity_id`) VALUES (NEW.id);
-    END //
-delimiter ;*
+CREATE PROCEDURE GetAllIdentitiesForEntity (IN entity_id int) BEGIN
+
+SELECT
+  *
+FROM
+  `identity`
+WHERE
+  `primary_entity_id` = entity_id;
+
+END //
+
+CREATE TRIGGER create_placeholder_id AFTER INSERT ON `entity` FOR EACH ROW BEGIN
+
+INSERT INTO
+  `identity` (`primary_entity_id`)
+VALUES
+  (NEW.id);
+
+END //
+
+DELIMITER ;
