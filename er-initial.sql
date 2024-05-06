@@ -74,15 +74,17 @@ CREATE TABLE
   `location` (
     `id` integer PRIMARY KEY AUTO_INCREMENT,
     `address_id` integer,
-    `geo_lat` decimal,
-    `geo_long` decimal,
+    `geo_lat` decimal(8,6),
+    `geo_long` decimal(9,6),
     `primary_street` varchar(35),
     `secondary_street` varchar(35),
     `tertiary_street` varchar(35),
     `city` varchar(35),
     `region` varchar(35),
     `country_code` varchar(3),
-    `fulltext_desc` varchar(512)
+    `fulltext_desc` varchar(512),
+    CHECK (`geo_lat` BETWEEN 90.0 AND -90.0),
+    CHECK (`geo_long` BETWEEN 180.0 AND -180.0)
   );
 
 CREATE TABLE
